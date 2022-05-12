@@ -14,11 +14,11 @@ sort←{
     sorted_data←↑{⍵⌷read_matrix}¨⍋read_matrix
     outfd←(output_dir,'/')(⎕ncreate⍠'Unique'1)0
     w←(⊃,/{(⎕ucs 10),⍨⍕⍵}¨↓sorted_data)⎕nappend outfd
+    nuntie_outfd←⎕nuntie outfd
     ∇⍵+full_lines
   }
   end_byte←loop 0
   ⎕nuntie infd
-  ⎕nuntie outfd
 }
 
 analyze←{
