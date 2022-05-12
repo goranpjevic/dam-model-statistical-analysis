@@ -4,7 +4,7 @@ sort←{
   input_file←⊃⍵
   output_dir←2⊃⍵
   mkdirsh←⎕sh'mkdir -p ',output_dir
-  infd←input_file ⎕ntie 0
+  infd←input_file⎕ntie 0
   blk←16×1024×1024
   loop←{
     data←⎕nread infd 80 blk ⍵
