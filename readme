@@ -2,3 +2,11 @@
 
 read data from a file using the disk access model and perform statistical
 analysis on them.
+
+usage:
+
+  dam.apl [option] [args]
+
+options:
+
+  s [input_file] [output_dir]
