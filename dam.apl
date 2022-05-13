@@ -1,8 +1,7 @@
 #!/usr/bin/env dyalogscript
 
 sort←{
-  input_file←⊃⍵
-  output_dir←2⊃⍵
+  input_file output_dir←⍵
   mkdirsh←⎕sh'mkdir -p ',output_dir
   infd←input_file⎕ntie 0
   blk←16×1024×1024
