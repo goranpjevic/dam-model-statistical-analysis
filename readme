@@ -10,3 +10,5 @@ usage:
 options:
 
   s [input_file] [output_dir]
+
+  a [input_dir] [memory_buffer_size] [block_size] [min_x] [max_x] [min_y] [max_y] [basket_size] [z|i|t]
