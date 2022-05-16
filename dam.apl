@@ -40,6 +40,7 @@ read_files←{
         data←⎕nread current_file 80 blk start_byte
         ⍝ finished reading the current file
         0=≢data:read_from_files loop_data i
+        ⍝ memory buffer is full
         i≥m:(loop_data i)start_byte
         full_lines←⊃⌽⍸(⎕ucs 10)=data
         read_matrix←↑⍎¨(⎕ucs 10)(≠⊆⊢)full_lines↑data
