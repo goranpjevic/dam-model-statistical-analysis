@@ -26,37 +26,38 @@ read_files←{
   m b×←1024×1024
   input_files←⎕sh'ls ',input_dir,'/*'
   vals←⍬
-  ⍝ maximum number of blocks in the memory buffer
-  n←⌊m÷b
   read_from_files←{
     0=⍴input_files:⍬
     current_file←(⊃input_files)⎕ntie 0
     input_files↓⍨←1
     read_from_current_file←{
       (loop_data i)start_byte←⍵
-      i←{⍵≠0:⍵⋄⊃n(vals,←filter loop_data minx maxx miny maxy opt)}i
+      i←{⍵≥m:0⋄⊃⍵(vals,←filter loop_data minx maxx miny maxy opt)}i
       loop←{
         (loop_data i)start_byte←⍵
         ⍝ memory buffer is full
-        i=0:(loop_data i)start_byte
-        data←⎕nread current_file 80 b start_byte
+        blk←b((⊢×>)+⊣×≤)m-i
+        data←⎕nread current_file 80 blk start_byte
         ⍝ finished reading the current file
         0=≢data:read_from_files loop_data i
-        i-←1
+        i≥m:(loop_data i)start_byte
         full_lines←⊃⌽⍸(⎕ucs 10)=data
         read_matrix←↑⍎¨(⎕ucs 10)(≠⊆⊢)full_lines↑data
-        loop_data←{i=¯1+n:⍵⋄loop_data⍪⍵}read_matrix
+        ⍝ no lines in the block are useful
+        ((minx>⊃∘⊖∘⊢)∨(maxx<⊃∘⊢))read_matrix:∇(loop_data i)(start_byte+full_lines)
+        loop_data←{i=0:⍵⋄loop_data⍪⍵}read_matrix
+        i+←≢data
         ∇(loop_data i)(start_byte+full_lines)
       }
       l←loop(loop_data i)start_byte
       2≠⍴l:⍬
       (loop_data i)start_byte←l
-      i=0:∇(loop_data i)start_byte
+      i≥m:∇(loop_data i)start_byte
       read_from_files loop_data i
     }
     read_from_current_file⍵0
   }
-  i←n
+  i←0
   r←read_from_files ⍬ i
   nuntie_files←⎕nuntie⍬
   analyze vals bucket_size
@@ -64,6 +65,7 @@ read_files←{
 
 filter←{
   data minx maxx miny maxy opt←⍵
+  1=⍴⍴data:⍬
   xyfilt←{((minx≤⍵)∧maxx≥⍵)∨(miny≤⍵)∧maxy≥⍵}data
   line_filter←∧⌿2↑⍉xyfilt
   good_lines←⍉line_filter/⍉data
