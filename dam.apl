@@ -80,7 +80,7 @@ filter←{
 analyze←{
   vals B←⍵
   ⍝ number of buckets
-  K←⌊1+B÷⍨(|⌊/-⌈/)vals
+  K←⌊1+B÷⍨(⌈/-⌊/)vals
   ⍝ bucket indices for values
   bi←1+⌊B÷⍨(⊢-⌊/)vals
   ⍝ indices for buckets
