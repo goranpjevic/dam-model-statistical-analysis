@@ -44,7 +44,7 @@ read_files←{
         full_lines←⊃⌽⍸(⎕ucs 10)=data
         read_matrix←↑⍎¨(⎕ucs 10)(≠⊆⊢)full_lines↑data
         ⍝ no lines in the block are useful
-        ((minx>⊃∘⊖∘⊢)∨(maxx<⊃∘⊢))read_matrix:∇(loop_data i)(start_byte+full_lines)
+        (minx>⊃∘⊖∘⊢∨maxx<⊃∘⊢)read_matrix:∇(loop_data i)(start_byte+full_lines)
         loop_data←{i=0:⍵⋄loop_data⍪⍵}read_matrix
         i+←≢data
         ∇(loop_data i)(start_byte+full_lines)
@@ -92,13 +92,13 @@ analyze←{
   ⍝ all bucket values
   bv←fbv+B×¯1+bid
   avg←((+/bv×⊢)÷+/)≢¨b
-  std←.5*⍨((+/(2*⍨bv-avg)×⊢)÷+/)≢¨b
+  std←.5*⍨(+/(2*⍨bv-avg)×⊢÷+/)≢¨b
   ska←(+/(3*⍨bv-avg)×⊢÷+/)≢¨b
   skb←(3÷2)*⍨(+/(2*⍨bv-avg)×⊢÷(-K)++/)≢¨b
   sk←ska÷skb
-  kua←((+/(4*⍨bv-avg)×⊢))≢¨b
-  kub←2*⍨((+/(2*⍨bv-avg)×⊢))≢¨b
-  ku←¯3+(+/≢¨b)×(kua÷kub)
+  kua←(+/(4*⍨bv-avg)×⊢)≢¨b
+  kub←2*⍨(+/(2*⍨bv-avg)×⊢)≢¨b
+  ku←¯3+(+/≢¨b)×kua÷kub
   ⎕←'number of values: ',≢vals
   ⎕←'number of buckets: ',K
   ⎕←'average: ',avg
