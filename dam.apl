@@ -35,7 +35,7 @@ read_files←{
       i←{⍵≥m:0⋄⊃⍵(vals,←filter loop_data minx maxx miny maxy opt)}i
       loop←{
         (loop_data i)start_byte←⍵
-        ⍝ memory buffer is full
+        ⍝ number of bytes to read
         blk←b((⊢×>)+⊣×≤)m-i
         data←⎕nread current_file 80 blk start_byte
         ⍝ finished reading the current file
