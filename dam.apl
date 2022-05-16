@@ -93,8 +93,8 @@ analyze←{
   bv←fbv+B×¯1+bid
   avg←((+/bv×⊢)÷+/)≢¨b
   std←.5*⍨((+/(2*⍨bv-avg)×⊢)÷+/)≢¨b
-  ska←((+/(3*⍨bv-avg)×⊢)÷+/)≢¨b
-  skb←(3÷2)*⍨((+/(2*⍨bv-avg)×⊢)÷((-K)++/))≢¨b
+  ska←(+/(3*⍨bv-avg)×⊢÷+/)≢¨b
+  skb←(3÷2)*⍨(+/(2*⍨bv-avg)×⊢÷(-K)++/)≢¨b
   sk←ska÷skb
   kua←((+/(4*⍨bv-avg)×⊢))≢¨b
   kub←2*⍨((+/(2*⍨bv-avg)×⊢))≢¨b
