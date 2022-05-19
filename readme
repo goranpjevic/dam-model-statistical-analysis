@@ -3,6 +3,9 @@
 read data from a file using the disk access model and perform statistical
 analysis on them.
 
+each line in the input file consists of five numbers separated by a space:  the
+x, y, z coordinates, the intensity (i), and the time (t).
+
 usage:
 
   dam.apl [option] [args]
