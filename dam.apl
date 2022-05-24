@@ -32,7 +32,7 @@ read_files←{
     input_files↓⍨←1
     read_from_current_file←{
       (loop_data i)start_byte←⍵
-      i←{⍵≥m:0⋄⊃⍵(vals,←filter loop_data minx maxx miny maxy opt)}i
+      i←{⍵≥m:0⋄vals,←filter loop_data minx maxx miny maxy opt⋄⍵}i
       loop←{
         (loop_data i)start_byte←⍵
         ⍝ number of bytes to read
